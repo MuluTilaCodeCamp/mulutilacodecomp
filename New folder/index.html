@@ -1,0 +1,1058 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Tech Company Landing Page</title>
+    <meta
+      name="description"
+      content="Professional IT services landing page with hero, about, services, training, contact, and footer sections."
+    />
+    <style>
+      :root {
+        --primary: #0b63ce;
+        --primary-dark: #084b9a;
+        --secondary: #0f172a;
+        --accent: #f59e0b;
+        --bg: #f8fbff;
+        --white: #ffffff;
+        --text: #1f2937;
+        --muted: #64748b;
+        --border: #dbe7f5;
+        --shadow: 0 10px 30px rgba(15, 23, 42, 0.08);
+        --radius: 18px;
+        --max-width: 1180px;
+      }
+
+      * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+
+      html {
+        scroll-behavior: smooth;
+      }
+
+      body {
+        font-family: Arial, Helvetica, sans-serif;
+        color: var(--text);
+        background: var(--bg);
+        line-height: 1.6;
+      }
+
+      img {
+        max-width: 100%;
+        display: block;
+      }
+
+      a {
+        text-decoration: none;
+        color: inherit;
+      }
+
+      ul {
+        list-style: none;
+      }
+
+      .container {
+        width: min(100% - 32px, var(--max-width));
+        margin-inline: auto;
+      }
+
+      .btn {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 10px;
+        padding: 14px 22px;
+        border-radius: 999px;
+        font-weight: 700;
+        font-size: 15px;
+        border: none;
+        cursor: pointer;
+        transition: 0.25s ease;
+      }
+
+      .btn-primary {
+        background: var(--primary);
+        color: var(--white);
+        box-shadow: var(--shadow);
+      }
+
+      .btn-primary:hover {
+        background: var(--primary-dark);
+        transform: translateY(-2px);
+      }
+
+      .btn-outline {
+        background: transparent;
+        color: var(--primary);
+        border: 2px solid var(--primary);
+      }
+
+      .btn-outline:hover {
+        background: var(--primary);
+        color: var(--white);
+      }
+
+      .section {
+        padding: 88px 0;
+      }
+
+      .section-title {
+        font-size: clamp(28px, 4vw, 42px);
+        line-height: 1.1;
+        margin-bottom: 14px;
+        color: var(--secondary);
+      }
+
+      .section-subtitle {
+        max-width: 700px;
+        color: var(--muted);
+        font-size: 16px;
+        margin-bottom: 42px;
+      }
+
+      .tag {
+        display: inline-block;
+        margin-bottom: 14px;
+        background: #e8f1ff;
+        color: var(--primary);
+        padding: 8px 14px;
+        border-radius: 999px;
+        font-weight: 700;
+        font-size: 13px;
+        letter-spacing: 0.3px;
+      }
+
+      /* Header */
+      .header {
+        position: sticky;
+        top: 0;
+        z-index: 1000;
+        background: rgba(255, 255, 255, 0.9);
+        backdrop-filter: blur(12px);
+        border-bottom: 1px solid rgba(219, 231, 245, 0.8);
+      }
+
+      .nav {
+        min-height: 78px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 24px;
+      }
+
+      .logo {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        font-weight: 800;
+        color: var(--secondary);
+        white-space: nowrap;
+      }
+
+      .logo-badge {
+        width: 42px;
+        height: 42px;
+        border-radius: 12px;
+        background: linear-gradient(135deg, var(--primary), #3b82f6);
+        color: white;
+        display: grid;
+        place-items: center;
+        font-size: 18px;
+        box-shadow: var(--shadow);
+      }
+
+      .nav-links {
+        display: flex;
+        align-items: center;
+        gap: 26px;
+        font-weight: 600;
+        color: #334155;
+      }
+
+      .nav-links a:hover {
+        color: var(--primary);
+      }
+
+      .nav-actions {
+        display: flex;
+        align-items: center;
+        gap: 14px;
+      }
+
+      .menu-toggle {
+        display: none;
+        width: 48px;
+        height: 48px;
+        border-radius: 12px;
+        border: 1px solid var(--border);
+        background: var(--white);
+        cursor: pointer;
+        font-size: 20px;
+      }
+
+      /* Hero */
+      .hero {
+        padding: 88px 0 64px;
+        background:
+          radial-gradient(
+            circle at top left,
+            rgba(11, 99, 206, 0.12),
+            transparent 35%
+          ),
+          radial-gradient(
+            circle at bottom right,
+            rgba(245, 158, 11, 0.12),
+            transparent 28%
+          );
+      }
+
+      .hero-grid {
+        display: grid;
+        grid-template-columns: 1.1fr 0.9fr;
+        gap: 44px;
+        align-items: center;
+      }
+
+      .hero h1 {
+        font-size: clamp(38px, 5vw, 62px);
+        line-height: 1.05;
+        color: var(--secondary);
+        margin-bottom: 18px;
+      }
+
+      .hero p {
+        font-size: 18px;
+        color: var(--muted);
+        max-width: 650px;
+        margin-bottom: 28px;
+      }
+
+      .hero-actions {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 14px;
+        margin-bottom: 34px;
+      }
+
+      .hero-stats {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 14px;
+      }
+
+      .stat-card {
+        background: var(--white);
+        border: 1px solid var(--border);
+        border-radius: var(--radius);
+        padding: 20px;
+        box-shadow: var(--shadow);
+      }
+
+      .stat-card h3 {
+        color: var(--primary);
+        font-size: 28px;
+        line-height: 1;
+        margin-bottom: 8px;
+      }
+
+      .stat-card p {
+        margin: 0;
+        font-size: 14px;
+        color: var(--muted);
+      }
+
+      .hero-visual {
+        position: relative;
+      }
+
+      .visual-card {
+        background: var(--white);
+        border: 1px solid var(--border);
+        border-radius: 28px;
+        box-shadow: var(--shadow);
+        overflow: hidden;
+      }
+
+      .visual-top {
+        padding: 18px 20px;
+        background: linear-gradient(135deg, #0f172a, #1e3a8a);
+        color: white;
+      }
+
+      .visual-top small {
+        opacity: 0.8;
+        display: block;
+        margin-bottom: 8px;
+      }
+
+      .visual-top h3 {
+        font-size: 24px;
+        line-height: 1.2;
+      }
+
+      .visual-body {
+        padding: 22px;
+        display: grid;
+        gap: 16px;
+      }
+
+      .mini-box {
+        background: #f8fbff;
+        border: 1px solid var(--border);
+        border-radius: 16px;
+        padding: 16px;
+      }
+
+      .mini-box strong {
+        display: block;
+        margin-bottom: 6px;
+        color: var(--secondary);
+      }
+
+      .floating-badge {
+        position: absolute;
+        right: -10px;
+        bottom: 24px;
+        background: var(--accent);
+        color: #111827;
+        border-radius: 999px;
+        padding: 12px 18px;
+        font-weight: 800;
+        box-shadow: 0 16px 40px rgba(245, 158, 11, 0.28);
+      }
+
+      /* About */
+      .about-grid {
+        display: grid;
+        grid-template-columns: 0.95fr 1.05fr;
+        gap: 42px;
+        align-items: center;
+      }
+
+      .about-card {
+        background: var(--white);
+        border: 1px solid var(--border);
+        border-radius: 28px;
+        padding: 30px;
+        box-shadow: var(--shadow);
+        min-height: 100%;
+      }
+
+      .about-list {
+        display: grid;
+        gap: 16px;
+        margin-top: 22px;
+      }
+
+      .about-item {
+        padding: 16px 18px;
+        background: #f8fbff;
+        border: 1px solid var(--border);
+        border-radius: 16px;
+      }
+
+      .about-item h4 {
+        color: var(--secondary);
+        margin-bottom: 6px;
+        font-size: 17px;
+      }
+
+      .about-item p {
+        color: var(--muted);
+        font-size: 15px;
+      }
+
+      /* Services */
+      .services-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 22px;
+      }
+
+      .service-card {
+        background: var(--white);
+        border: 1px solid var(--border);
+        border-radius: 24px;
+        padding: 28px;
+        box-shadow: var(--shadow);
+        transition: 0.28s ease;
+      }
+
+      .service-card:hover {
+        transform: translateY(-8px);
+        border-color: #bad3f7;
+      }
+
+      .service-icon {
+        width: 58px;
+        height: 58px;
+        border-radius: 16px;
+        display: grid;
+        place-items: center;
+        font-size: 24px;
+        margin-bottom: 18px;
+        background: #e8f1ff;
+        color: var(--primary);
+      }
+
+      .service-card h3 {
+        margin-bottom: 10px;
+        color: var(--secondary);
+        font-size: 22px;
+      }
+
+      .service-card p {
+        color: var(--muted);
+        font-size: 15px;
+        margin-bottom: 16px;
+      }
+
+      .service-card span {
+        color: var(--primary);
+        font-weight: 700;
+        font-size: 14px;
+      }
+
+      /* CTA / Training */
+      .cta-box {
+        background: linear-gradient(135deg, #0f172a, #0b63ce);
+        color: white;
+        border-radius: 30px;
+        padding: 42px;
+        display: grid;
+        grid-template-columns: 1fr auto;
+        gap: 24px;
+        align-items: center;
+        box-shadow: var(--shadow);
+      }
+
+      .cta-box h2 {
+        font-size: clamp(28px, 4vw, 42px);
+        line-height: 1.1;
+        margin-bottom: 12px;
+      }
+
+      .cta-box p {
+        color: rgba(255, 255, 255, 0.85);
+        max-width: 680px;
+      }
+
+      .cta-box .btn {
+        background: white;
+        color: var(--secondary);
+      }
+
+      .cta-box .btn:hover {
+        transform: translateY(-2px);
+        background: #f8fafc;
+      }
+
+      /* Contact */
+      .contact-grid {
+        display: grid;
+        grid-template-columns: 0.9fr 1.1fr;
+        gap: 24px;
+        align-items: start;
+      }
+
+      .contact-card,
+      .form-card {
+        background: var(--white);
+        border: 1px solid var(--border);
+        border-radius: 24px;
+        padding: 28px;
+        box-shadow: var(--shadow);
+      }
+
+      .contact-card h3,
+      .form-card h3 {
+        margin-bottom: 16px;
+        font-size: 24px;
+        color: var(--secondary);
+      }
+
+      .contact-info {
+        display: grid;
+        gap: 16px;
+        margin-top: 20px;
+      }
+
+      .contact-item {
+        padding: 16px;
+        border: 1px solid var(--border);
+        border-radius: 16px;
+        background: #f8fbff;
+      }
+
+      .contact-item strong {
+        display: block;
+        margin-bottom: 6px;
+        color: var(--secondary);
+      }
+
+      .form-grid {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 16px;
+      }
+
+      .form-group {
+        display: grid;
+        gap: 8px;
+      }
+
+      .form-group.full {
+        grid-column: 1 / -1;
+      }
+
+      label {
+        font-weight: 700;
+        font-size: 14px;
+        color: var(--secondary);
+      }
+
+      input,
+      textarea,
+      select {
+        width: 100%;
+        padding: 14px 16px;
+        border-radius: 14px;
+        border: 1px solid var(--border);
+        outline: none;
+        font-size: 15px;
+        color: var(--text);
+        background: white;
+      }
+
+      input:focus,
+      textarea:focus,
+      select:focus {
+        border-color: var(--primary);
+        box-shadow: 0 0 0 4px rgba(11, 99, 206, 0.08);
+      }
+
+      textarea {
+        min-height: 140px;
+        resize: vertical;
+      }
+
+      .form-message {
+        margin-top: 16px;
+        font-weight: 700;
+        font-size: 14px;
+        color: var(--primary);
+        display: none;
+      }
+
+      /* Footer */
+      .footer {
+        background: #0f172a;
+        color: #dbeafe;
+        padding: 28px 0;
+        margin-top: 30px;
+      }
+
+      .footer-row {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 18px;
+        flex-wrap: wrap;
+      }
+
+      .footer-links {
+        display: flex;
+        gap: 18px;
+        flex-wrap: wrap;
+      }
+
+      .footer-links a {
+        opacity: 0.9;
+      }
+
+      .footer-links a:hover {
+        opacity: 1;
+        color: white;
+      }
+
+      /* Responsive */
+      @media (max-width: 1024px) {
+        .hero-grid,
+        .about-grid,
+        .contact-grid,
+        .cta-box {
+          grid-template-columns: 1fr;
+        }
+
+        .services-grid {
+          grid-template-columns: repeat(2, 1fr);
+        }
+
+        .cta-box {
+          padding: 34px;
+        }
+      }
+
+      @media (max-width: 820px) {
+        .nav-links,
+        .nav-actions .btn-outline {
+          display: none;
+        }
+
+        .menu-toggle {
+          display: inline-grid;
+          place-items: center;
+        }
+
+        .nav-links.mobile-open {
+          display: flex;
+          position: absolute;
+          left: 16px;
+          right: 16px;
+          top: 84px;
+          flex-direction: column;
+          align-items: stretch;
+          background: white;
+          padding: 18px;
+          border-radius: 20px;
+          border: 1px solid var(--border);
+          box-shadow: var(--shadow);
+        }
+
+        .hero-stats,
+        .services-grid,
+        .form-grid {
+          grid-template-columns: 1fr;
+        }
+      }
+
+      @media (max-width: 560px) {
+        .section {
+          padding: 68px 0;
+        }
+
+        .hero {
+          padding-top: 64px;
+        }
+
+        .hero h1 {
+          font-size: 36px;
+        }
+
+        .btn {
+          width: 100%;
+        }
+
+        .hero-actions {
+          flex-direction: column;
+        }
+
+        .visual-card,
+        .about-card,
+        .service-card,
+        .contact-card,
+        .form-card {
+          border-radius: 20px;
+        }
+
+        .cta-box {
+          border-radius: 22px;
+          padding: 24px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <header class="header">
+      <div class="container nav">
+        <a href="#home" class="logo">
+          <span class="logo-badge">AT</span>
+          <span>TechVision PLC</span>
+        </a>
+
+        <nav class="nav-links" id="navLinks">
+          <a href="#home">Home</a>
+          <a href="#about">About Us</a>
+          <a href="#services">Services</a>
+          <a href="#training">Training</a>
+          <a href="#contact">Contact</a>
+        </nav>
+
+        <div class="nav-actions">
+          <a href="#contact" class="btn btn-outline">Get Quote</a>
+          <button class="menu-toggle" id="menuToggle" aria-label="Open menu">
+            ☰
+          </button>
+        </div>
+      </div>
+    </header>
+
+    <main>
+      <section class="hero" id="home">
+        <div class="container hero-grid">
+          <div>
+            <span class="tag">Reliable IT Solutions for Modern Business</span>
+            <h1>Software, Security, Network & Training Under One Roof</h1>
+            <p>
+              We help businesses grow with practical technology solutions,
+              strong infrastructure, smart digital products, and hands-on
+              technical training that produces real results.
+            </p>
+
+            <div class="hero-actions">
+              <a href="#services" class="btn btn-primary">Explore Services</a>
+              <a href="#contact" class="btn btn-outline">Talk to Us</a>
+            </div>
+
+            <div class="hero-stats">
+              <div class="stat-card">
+                <h3>120+</h3>
+                <p>Projects supported across multiple industries</p>
+              </div>
+              <div class="stat-card">
+                <h3>24/7</h3>
+                <p>Technical support and maintenance readiness</p>
+              </div>
+              <div class="stat-card">
+                <h3>10+</h3>
+                <p>Core service areas delivered with confidence</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="hero-visual">
+            <div class="visual-card">
+              <div class="visual-top">
+                <small>Technology Partner</small>
+                <h3>
+                  Build smarter systems with a team that actually delivers
+                </h3>
+              </div>
+              <div class="visual-body">
+                <div class="mini-box">
+                  <strong>Custom Software</strong>
+                  Tailored systems for operations, reporting, internal workflow,
+                  and customer-facing solutions.
+                </div>
+                <div class="mini-box">
+                  <strong>Security & Infrastructure</strong>
+                  CCTV, access control, networking, telecom setup, and stable
+                  deployment support.
+                </div>
+                <div class="mini-box">
+                  <strong>Training & Consultancy</strong>
+                  Practical training programs and implementation guidance for
+                  teams and organizations.
+                </div>
+              </div>
+            </div>
+            <div class="floating-badge">Trusted by growing teams</div>
+          </div>
+        </div>
+      </section>
+
+      <section class="section" id="about">
+        <div class="container about-grid">
+          <div class="about-card">
+            <span class="tag">About Us</span>
+            <h2 class="section-title">
+              We don’t sell fluff. We solve real business problems.
+            </h2>
+            <p class="section-subtitle" style="margin-bottom: 0">
+              Our work focuses on technology that improves efficiency, security,
+              visibility, and long-term growth. That means clean systems,
+              practical execution, and support that does not disappear after
+              deployment.
+            </p>
+          </div>
+
+          <div class="about-list">
+            <div class="about-item">
+              <h4>Mission</h4>
+              <p>
+                Deliver technology services that are practical, reliable, and
+                valuable for modern organizations.
+              </p>
+            </div>
+            <div class="about-item">
+              <h4>Vision</h4>
+              <p>
+                Become a trusted technology partner for companies that want real
+                capability, not empty promises.
+              </p>
+            </div>
+            <div class="about-item">
+              <h4>Approach</h4>
+              <p>
+                We combine software, infrastructure, security systems, and
+                training into solutions that actually work together.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="section" id="services">
+        <div class="container">
+          <span class="tag">Our Services</span>
+          <h2 class="section-title">What We Provide</h2>
+          <p class="section-subtitle">
+            We cover the core technology areas most companies keep patching
+            badly. You need one solid team, not five mediocre ones.
+          </p>
+
+          <div class="services-grid">
+            <article class="service-card">
+              <div class="service-icon">💻</div>
+              <h3>Software Development</h3>
+              <p>
+                Custom business software, internal systems, dashboards, portals,
+                and workflow automation.
+              </p>
+              <span>Scalable digital solutions</span>
+            </article>
+
+            <article class="service-card">
+              <div class="service-icon">🌐</div>
+              <h3>Web & App Development</h3>
+              <p>
+                Responsive websites, web platforms, and application interfaces
+                built for speed and usability.
+              </p>
+              <span>Clean and modern experience</span>
+            </article>
+
+            <article class="service-card">
+              <div class="service-icon">🛡️</div>
+              <h3>Security Systems</h3>
+              <p>
+                CCTV, access control, monitoring systems, and security-focused
+                deployment for business environments.
+              </p>
+              <span>Protection with visibility</span>
+            </article>
+
+            <article class="service-card">
+              <div class="service-icon">📡</div>
+              <h3>Network Infrastructure</h3>
+              <p>
+                Structured networking, wireless setup, telecom integration, and
+                office connectivity planning.
+              </p>
+              <span>Reliable business connectivity</span>
+            </article>
+
+            <article class="service-card">
+              <div class="service-icon">🎓</div>
+              <h3>Training & Consultancy</h3>
+              <p>
+                Technical training, implementation guidance, and professional
+                support to help teams perform better.
+              </p>
+              <span>Practical skills, not theory fluff</span>
+            </article>
+
+            <article class="service-card">
+              <div class="service-icon">⚙️</div>
+              <h3>System Support</h3>
+              <p>
+                Maintenance, troubleshooting, upgrades, optimization, and
+                post-launch technical assistance.
+              </p>
+              <span>Ongoing technical backup</span>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section class="section" id="training">
+        <div class="container">
+          <div class="cta-box">
+            <div>
+              <h2>Build stronger teams with focused technical training</h2>
+              <p>
+                We provide practical learning programs in technology and digital
+                tools so individuals and organizations can build real
+                capability, not just collect certificates.
+              </p>
+            </div>
+            <div>
+              <a href="#contact" class="btn">Request Training Info</a>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="section" id="contact">
+        <div class="container contact-grid">
+          <div class="contact-card">
+            <span class="tag">Contact Us</span>
+            <h3>Let’s discuss your project</h3>
+            <p style="color: var(--muted)">
+              Tell us what you need. Be specific. Vague requests waste time.
+            </p>
+
+            <div class="contact-info">
+              <div class="contact-item">
+                <strong>Address</strong>
+                Addis Ababa, Ethiopia
+              </div>
+              <div class="contact-item">
+                <strong>Phone</strong>
+                +251 900 000 000
+              </div>
+              <div class="contact-item">
+                <strong>Email</strong>
+                info@yourcompany.com
+              </div>
+              <div class="contact-item">
+                <strong>Working Hours</strong>
+                Monday - Saturday, 8:30 AM - 6:00 PM
+              </div>
+            </div>
+          </div>
+
+          <div class="form-card">
+            <h3>Send a message</h3>
+            <form id="contactForm">
+              <div class="form-grid">
+                <div class="form-group">
+                  <label for="name">Full Name</label>
+                  <input
+                    id="name"
+                    name="name"
+                    type="text"
+                    placeholder="Your full name"
+                    required
+                  />
+                </div>
+
+                <div class="form-group">
+                  <label for="phone">Phone Number</label>
+                  <input
+                    id="phone"
+                    name="phone"
+                    type="tel"
+                    placeholder="+251..."
+                    required
+                  />
+                </div>
+
+                <div class="form-group">
+                  <label for="email">Email Address</label>
+                  <input
+                    id="email"
+                    name="email"
+                    type="email"
+                    placeholder="you@example.com"
+                    required
+                  />
+                </div>
+
+                <div class="form-group">
+                  <label for="service">Service Needed</label>
+                  <select id="service" name="service" required>
+                    <option value="">Select a service</option>
+                    <option>Software Development</option>
+                    <option>Web & App Development</option>
+                    <option>Security Systems</option>
+                    <option>Network Infrastructure</option>
+                    <option>Training & Consultancy</option>
+                    <option>Technical Support</option>
+                  </select>
+                </div>
+
+                <div class="form-group full">
+                  <label for="message">Project Details</label>
+                  <textarea
+                    id="message"
+                    name="message"
+                    placeholder="Explain your project clearly..."
+                    required
+                  ></textarea>
+                </div>
+
+                <div class="form-group full">
+                  <button type="submit" class="btn btn-primary">
+                    Submit Request
+                  </button>
+                </div>
+              </div>
+
+              <div class="form-message" id="formMessage">
+                Message sent successfully. This demo currently shows frontend
+                behavior only.
+              </div>
+            </form>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="footer">
+      <div class="container footer-row">
+        <p>© 2026 TechVision PLC. All rights reserved.</p>
+        <div class="footer-links">
+          <a href="#home">Home</a>
+          <a href="#about">About Us</a>
+          <a href="#services">Services</a>
+          <a href="#training">Training</a>
+          <a href="#contact">Contact</a>
+        </div>
+      </div>
+    </footer>
+
+    <script>
+      const menuToggle = document.getElementById("menuToggle");
+      const navLinks = document.getElementById("navLinks");
+      const contactForm = document.getElementById("contactForm");
+      const formMessage = document.getElementById("formMessage");
+
+      menuToggle.addEventListener("click", () => {
+        navLinks.classList.toggle("mobile-open");
+        menuToggle.textContent = navLinks.classList.contains("mobile-open")
+          ? "✕"
+          : "☰";
+      });
+
+      document.querySelectorAll(".nav-links a").forEach((link) => {
+        link.addEventListener("click", () => {
+          navLinks.classList.remove("mobile-open");
+          menuToggle.textContent = "☰";
+        });
+      });
+
+      contactForm.addEventListener("submit", function (e) {
+        e.preventDefault();
+
+        const formData = new FormData(contactForm);
+        const values = Object.fromEntries(formData.entries());
+
+        if (
+          !values.name ||
+          !values.phone ||
+          !values.email ||
+          !values.service ||
+          !values.message
+        ) {
+          formMessage.style.display = "block";
+          formMessage.style.color = "#dc2626";
+          formMessage.textContent =
+            "Fill all fields properly before submitting.";
+          return;
+        }
+
+        formMessage.style.display = "block";
+        formMessage.style.color = "#0b63ce";
+        formMessage.textContent =
+          "Message sent successfully. This demo currently shows frontend behavior only.";
+
+        contactForm.reset();
+      });
+    </script>
+  </body>
+</html>
