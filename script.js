@@ -156,3 +156,10 @@ document.querySelectorAll(".faq-question").forEach((btn) => {
     item.classList.toggle("active");
   });
 });
+
+var typed = new Typed(".auto-type", {
+  strings: ["Impossible Is Only The Word Impossible"],
+  typeSpeed: 130,
+  backSpeed: 130,
+  loop: true,
+});
