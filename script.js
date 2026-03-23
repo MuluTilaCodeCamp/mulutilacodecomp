@@ -157,9 +157,9 @@ document.querySelectorAll(".faq-question").forEach((btn) => {
   });
 });
 
-var typed = new Typed(".auto-type", {
-  strings: ["Impossible Is Only The Word Impossible"],
-  typeSpeed: 130,
-  backSpeed: 130,
-  loop: true,
-});
+// var typed = new Typed(".auto-type", {
+//   strings: ["Impossible Is Only The Word Impossible"],
+//   typeSpeed: 130,
+//   backSpeed: 130,
+//   loop: true,
+// });
