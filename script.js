@@ -138,11 +138,11 @@ if (contactForm && formStatus) {
       formStatus.textContent = "Fill all fields properly.";
       formStatus.style.color = "#dc2626";
       return;
+    } else {
+      formStatus.textContent = "Message sent successfully. Frontend demo only.";
+      formStatus.style.color = "#0b63ce";
+      contactForm.reset();
     }
-
-    formStatus.textContent = "Message sent successfully. Frontend demo only.";
-    formStatus.style.color = "#0b63ce";
-    contactForm.reset();
   });
 }
 
