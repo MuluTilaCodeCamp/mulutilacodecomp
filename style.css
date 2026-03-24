@@ -71,6 +71,8 @@ select {
   align-items: center;
   justify-content: space-between;
   gap: 20px;
+  background-color: var(--nav-bg) !important;
+  backdrop-filter: var(--bk-drop-filter);
 }
 
 .brand {
