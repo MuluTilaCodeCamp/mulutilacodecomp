@@ -9,6 +9,7 @@
   --border: #dbe7f3;
   --bg: #f7fbff;
   --nav-bg: transparent;
+  --bk-drop-filter: blur();
   --shadow: 0 12px 30px rgba(11, 35, 75, 0.1);
   --shadow-strong: 0 18px 44px rgba(11, 35, 75, 0.16);
   --radius: 18px;
@@ -108,7 +109,8 @@ select {
   display: flex;
   align-items: center;
   gap: 18px;
-  background: var(--nav-bg);
+  background-color: var(--nav-bg) !important;
+  backdrop-filter: var(--bk-drop-filter);
 }
 
 .nav-link {
