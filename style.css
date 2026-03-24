@@ -8,6 +8,7 @@
   --muted: #64748b;
   --border: #dbe7f3;
   --bg: #f7fbff;
+  --nav-bg: transparent;
   --shadow: 0 12px 30px rgba(11, 35, 75, 0.1);
   --shadow-strong: 0 18px 44px rgba(11, 35, 75, 0.16);
   --radius: 18px;
@@ -107,6 +108,7 @@ select {
   display: flex;
   align-items: center;
   gap: 18px;
+  background: var(--nav-bg);
 }
 
 .nav-link {
