@@ -111,8 +111,8 @@ select {
   display: flex;
   align-items: center;
   gap: 18px;
-  background-color: var(--nav-bg) !important;
-  backdrop-filter: var(--bk-drop-filter);
+  /* background-color: var(--nav-bg) !important;
+  backdrop-filter: var(--bk-drop-filter); */
 }
 
 .nav-link {
