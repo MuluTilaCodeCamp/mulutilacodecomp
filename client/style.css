@@ -1581,6 +1581,21 @@ select {
     line-height: 1.15;
   }
 }
+.hero-title {
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  width: 100vw;
+  font-weight: lighter;
+}
+.hero-accent {
+  color: orangered !important;
+  font-weight: bolder !important;
+}
+.hero-quote {
+  font-weight: lighter;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  font-size: xx-small;
+  font-style: oblique;
+}
 /* =========================
    RESPONSIVE + CARD RAILS
    CLEAN FINAL VERSION
