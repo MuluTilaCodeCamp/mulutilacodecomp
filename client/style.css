@@ -1232,28 +1232,36 @@ select {
     .mobile-card-rail {
       display: grid !important;
       grid-auto-flow: column;
-      grid-auto-columns: 78%;
-      gap: 14px;
+      grid-auto-columns: clamp(220px, 68vw, 290px);
+      gap: 12px;
       overflow-x: auto;
       overflow-y: hidden;
       scroll-snap-type: x mandatory;
-      scroll-padding-left: 6px;
-      padding: 4px 6px 10px;
-      margin-bottom: 10px;
+      scroll-padding-left: 10px;
+      padding: 4px 10px 8px;
+      margin-bottom: 8px;
       -webkit-overflow-scrolling: touch;
-    }
-
-    .mobile-card-rail > * {
-      scroll-snap-align: center;
-      min-width: 0;
+      scrollbar-width: none;
+      align-items: stretch;
     }
 
     .mobile-card-rail::-webkit-scrollbar {
       display: none;
     }
 
-    .mobile-card-rail {
-      scrollbar-width: none;
+    .mobile-card-rail > * {
+      scroll-snap-align: center;
+      min-width: 0;
+      width: 100%;
+      max-width: 290px;
+    }
+
+    .hero-stats.mobile-card-rail {
+      grid-auto-columns: clamp(190px, 58vw, 250px);
+    }
+
+    .gallery-grid.mobile-card-rail {
+      grid-auto-columns: clamp(220px, 70vw, 300px);
     }
 
     .mobile-rail-dots {
@@ -1265,142 +1273,34 @@ select {
     }
 
     .mobile-rail-dot {
-      width: 9px;
-      height: 9px;
+      width: 8px;
+      height: 8px;
       border-radius: 50%;
       border: none;
-      background: rgba(11, 99, 206, 0.2);
-      transition: 0.25s ease;
+      background: rgba(11, 99, 206, 0.22);
       cursor: pointer;
+      transition: 0.25s ease;
     }
 
     .mobile-rail-dot.active {
       background: var(--primary);
       transform: scale(1.12);
     }
-
-    /* Different rail widths by section */
-    .hero-stats.mobile-card-rail {
-      grid-auto-columns: 74%;
-    }
-
-    .grid-3.mobile-card-rail,
-    .pricing-grid.mobile-card-rail,
-    .pricing-highlight-grid.mobile-card-rail,
-    .pricing-extra-grid.mobile-card-rail,
-    .pricing-insights.mobile-card-rail,
-    .gallery-grid.mobile-card-rail {
-      grid-auto-columns: 78%;
-    }
-
-    .testimonial-card,
-    .feature-card,
-    .program-card,
-    .gallery-item,
-    .pricing-card,
-    .pricing-highlight-card,
-    .pricing-extra-card,
-    .pricing-insight-card,
-    .stat-card {
-      min-height: auto;
-    }
   }
 
   @media (max-width: 520px) {
     .mobile-card-rail {
-      grid-auto-columns: 82%;
-      gap: 12px;
-      padding: 4px 4px 8px;
+      grid-auto-columns: clamp(210px, 72vw, 270px);
     }
 
     .hero-stats.mobile-card-rail {
-      grid-auto-columns: 76%;
+      grid-auto-columns: clamp(180px, 60vw, 235px);
     }
 
-    .grid-3.mobile-card-rail,
-    .pricing-grid.mobile-card-rail,
-    .pricing-highlight-grid.mobile-card-rail,
-    .pricing-extra-grid.mobile-card-rail,
-    .pricing-insights.mobile-card-rail,
     .gallery-grid.mobile-card-rail {
-      grid-auto-columns: 82%;
-    }
-
-    .mobile-rail-dots {
-      gap: 7px;
-      margin: 2px 0 16px;
-    }
-
-    .mobile-rail-dot {
-      width: 8px;
-      height: 8px;
+      grid-auto-columns: clamp(210px, 74vw, 280px);
     }
   }
-  .gallery-item img {
-    height: 240px;
-  }
-
-  .pricing-table {
-    min-width: 620px;
-  }
-}
-
-@media (max-width: 520px) {
-  .brand-logo {
-    width: 44px;
-    height: 44px;
-  }
-
-  .brand-title {
-    font-size: 0.9rem;
-  }
-
-  .brand-sub {
-    font-size: 0.7rem;
-  }
-
-  .section,
-  .inner-hero {
-    padding: 64px 0;
-  }
-
-  .hero-content h1,
-  .inner-hero h1 {
-    font-size: clamp(1.8rem, 8vw, 2.5rem);
-    line-height: 1.12;
-  }
-
-  .hero-content p,
-  .inner-hero p {
-    font-size: 0.94rem;
-  }
-
-  .feature-card,
-  .program-card,
-  .contact-info-card,
-  .contact-form-card,
-  .timeline-item,
-  .cta-box,
-  .testimonial-card,
-  .gallery-item,
-  .faq-item,
-  .pricing-card,
-  .pricing-highlight-card,
-  .pricing-extra-card,
-  .pricing-insight-card,
-  .pricing-summary-table {
-    padding: 18px;
-    border-radius: 20px;
-  }
-
-  .mobile-card-rail {
-    grid-auto-columns: minmax(88%, 88%);
-  }
-
-  .hero-stats.mobile-card-rail {
-    grid-auto-columns: minmax(92%, 92%);
-  }
-
   .section-head {
     margin-bottom: 30px;
   }
@@ -1589,6 +1489,7 @@ select {
 .hero-accent {
   color: orangered !important;
   font-weight: bolder !important;
+  text-shadow: orange !important;
 }
 .hero-quote {
   font-weight: lighter;
@@ -1645,7 +1546,7 @@ select {
   }
 
   .nav-wrap {
-    min-height: 72px;
+    max-height: 72px;
     gap: 12px;
     padding: 8px 0;
   }

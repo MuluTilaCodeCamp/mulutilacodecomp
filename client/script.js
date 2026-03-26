@@ -1,4 +1,3 @@
-//
 const menuToggle = document.getElementById("menuToggle");
 const siteNav = document.getElementById("siteNav");
 const scrollTopBtn = document.getElementById("scrollTopBtn");
@@ -73,7 +72,9 @@ if (revealEls.length) {
   const revealObserver = new IntersectionObserver(
     (entries) => {
       entries.forEach((entry) => {
-        if (entry.isIntersecting) entry.target.classList.add("show");
+        if (entry.isIntersecting) {
+          entry.target.classList.add("show");
+        }
       });
     },
     { threshold: 0.15 },
@@ -118,6 +119,8 @@ if (counters.length) {
 /* Tilt hover effect */
 tiltCards.forEach((card) => {
   card.addEventListener("mousemove", (e) => {
+    if (window.innerWidth <= 768) return;
+
     const rect = card.getBoundingClientRect();
     const x = e.clientX - rect.left;
     const y = e.clientY - rect.top;
@@ -240,52 +243,55 @@ function initMobileCardRails() {
   ];
 
   railSelectors.forEach((selector) => {
-    document.querySelectorAll(selector).forEach((rail, railIndex) => {
-      const next = rail.nextElementSibling;
-      const alreadyReady = rail.dataset.railReady === "true";
+    document.querySelectorAll(selector).forEach((rail) => {
+      const existingDots = rail.nextElementSibling;
 
       if (window.innerWidth > 768) {
         rail.classList.remove("mobile-card-rail");
         rail.dataset.railReady = "false";
 
-        if (next && next.classList.contains("mobile-rail-dots")) {
-          next.remove();
+        if (
+          existingDots &&
+          existingDots.classList.contains("mobile-rail-dots")
+        ) {
+          existingDots.remove();
         }
-
         return;
       }
 
-      if (alreadyReady) return;
+      if (rail.dataset.railReady === "true") return;
 
       const cards = Array.from(rail.children).filter(
         (child) => child.nodeType === 1,
       );
+
       if (cards.length <= 1) return;
 
       rail.classList.add("mobile-card-rail");
       rail.dataset.railReady = "true";
-      rail.dataset.railId = `${selector}-${railIndex}`;
 
       const dotsWrap = document.createElement("div");
       dotsWrap.className = "mobile-rail-dots";
 
-      cards.forEach((_, index) => {
+      const getCardLeft = (card) => {
+        const left =
+          card.offsetLeft -
+          rail.offsetLeft -
+          (rail.clientWidth - card.clientWidth) / 2;
+
+        const maxLeft = rail.scrollWidth - rail.clientWidth;
+        return Math.max(0, Math.min(left, maxLeft));
+      };
+
+      cards.forEach((card, index) => {
         const dot = document.createElement("button");
         dot.type = "button";
         dot.className = `mobile-rail-dot ${index === 0 ? "active" : ""}`;
         dot.setAttribute("aria-label", `Go to card ${index + 1}`);
 
         dot.addEventListener("click", () => {
-          const card = cards[index];
-          if (!card) return;
-
-          const left =
-            card.offsetLeft -
-            rail.offsetLeft -
-            (rail.clientWidth - card.clientWidth) / 2;
-
           rail.scrollTo({
-            left,
+            left: getCardLeft(card),
             behavior: "smooth",
           });
         });
