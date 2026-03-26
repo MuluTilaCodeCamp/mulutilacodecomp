@@ -229,8 +229,6 @@ document.querySelectorAll(".faq-question").forEach((btn) => {
 
 /* Mobile horizontal card rails with dots */
 function initMobileCardRails() {
-  if (window.innerWidth > 768) return;
-
   const railSelectors = [
     ".grid-3",
     ".hero-stats",
@@ -243,12 +241,25 @@ function initMobileCardRails() {
 
   railSelectors.forEach((selector) => {
     document.querySelectorAll(selector).forEach((rail, railIndex) => {
-      if (rail.dataset.railReady === "true") return;
+      const next = rail.nextElementSibling;
+      const alreadyReady = rail.dataset.railReady === "true";
+
+      if (window.innerWidth > 768) {
+        rail.classList.remove("mobile-card-rail");
+        rail.dataset.railReady = "false";
+
+        if (next && next.classList.contains("mobile-rail-dots")) {
+          next.remove();
+        }
+
+        return;
+      }
+
+      if (alreadyReady) return;
 
       const cards = Array.from(rail.children).filter(
         (child) => child.nodeType === 1,
       );
-
       if (cards.length <= 1) return;
 
       rail.classList.add("mobile-card-rail");
@@ -257,7 +268,6 @@ function initMobileCardRails() {
 
       const dotsWrap = document.createElement("div");
       dotsWrap.className = "mobile-rail-dots";
-      dotsWrap.setAttribute("aria-label", "Section scroll indicators");
 
       cards.forEach((_, index) => {
         const dot = document.createElement("button");
@@ -266,11 +276,16 @@ function initMobileCardRails() {
         dot.setAttribute("aria-label", `Go to card ${index + 1}`);
 
         dot.addEventListener("click", () => {
-          const targetCard = cards[index];
-          if (!targetCard) return;
+          const card = cards[index];
+          if (!card) return;
+
+          const left =
+            card.offsetLeft -
+            rail.offsetLeft -
+            (rail.clientWidth - card.clientWidth) / 2;
 
           rail.scrollTo({
-            left: targetCard.offsetLeft - rail.offsetLeft,
+            left,
             behavior: "smooth",
           });
         });
@@ -280,15 +295,16 @@ function initMobileCardRails() {
 
       rail.insertAdjacentElement("afterend", dotsWrap);
 
-      const updateActiveDot = () => {
-        const scrollLeft = rail.scrollLeft;
+      const updateDots = () => {
+        const railCenter = rail.scrollLeft + rail.clientWidth / 2;
         let activeIndex = 0;
         let smallestDistance = Infinity;
 
         cards.forEach((card, index) => {
-          const distance = Math.abs(
-            card.offsetLeft - rail.offsetLeft - scrollLeft,
-          );
+          const cardCenter =
+            card.offsetLeft - rail.offsetLeft + card.clientWidth / 2;
+          const distance = Math.abs(cardCenter - railCenter);
+
           if (distance < smallestDistance) {
             smallestDistance = distance;
             activeIndex = index;
@@ -300,8 +316,8 @@ function initMobileCardRails() {
         });
       };
 
-      rail.addEventListener("scroll", updateActiveDot, { passive: true });
-      updateActiveDot();
+      rail.addEventListener("scroll", updateDots, { passive: true });
+      updateDots();
     });
   });
 }
