@@ -1,4 +1,3 @@
-
 const menuToggle = document.getElementById("menuToggle");
 const siteNav = document.getElementById("siteNav");
 const scrollTopBtn = document.getElementById("scrollTopBtn");
@@ -11,80 +10,64 @@ const contactForm = document.getElementById("contactForm");
 const formStatus = document.getElementById("formStatus");
 const submitBtn = document.getElementById("submitBtn");
 
+/* Mobile menu */
 if (menuToggle && siteNav) {
-  const syncMenuState = () => {
-    const isOpen = siteNav.classList.contains("show");
-    document.body.classList.toggle("menu-open", isOpen && window.innerWidth <= 820);
-    menuToggle.innerHTML = isOpen ? "&#10005;" : "&#9776;";
-    menuToggle.setAttribute("aria-expanded", String(isOpen));
-  };
-
   menuToggle.addEventListener("click", () => {
     siteNav.classList.toggle("show");
-    syncMenuState();
+    menuToggle.textContent = siteNav.classList.contains("show") ? "✕" : "☰";
   });
 
-  document.querySelectorAll(".nav-link, .nav-cta").forEach((link) => {
+  document.querySelectorAll(".nav-link").forEach((link) => {
     link.addEventListener("click", () => {
       siteNav.classList.remove("show");
-      syncMenuState();
+      menuToggle.textContent = "☰";
     });
   });
-
-  window.addEventListener("resize", () => {
-    if (window.innerWidth > 820) {
-      siteNav.classList.remove("show");
-      syncMenuState();
-    }
-  });
-
-  syncMenuState();
 }
 
+/* Hero autoplay slider */
 let currentSlide = 0;
-let slideTimer;
 
 function showSlide(index) {
   if (!slides.length) return;
 
-  const safeIndex = ((index % slides.length) + slides.length) % slides.length;
+  slides.forEach((slide) => slide.classList.remove("active"));
+  dots.forEach((dot) => dot.classList.remove("active"));
 
-  slides.forEach((slide, i) => slide.classList.toggle("active", i === safeIndex));
-  dots.forEach((dot, i) => dot.classList.toggle("active", i === safeIndex));
-  currentSlide = safeIndex;
-}
+  slides[index].classList.add("active");
+  if (dots[index]) dots[index].classList.add("active");
 
-function startSlider() {
-  if (!slides.length || slides.length < 2) return;
-  clearInterval(slideTimer);
-  slideTimer = setInterval(() => showSlide(currentSlide + 1), 4500);
+  currentSlide = index;
 }
 
 if (slides.length) {
-  showSlide(0);
-  startSlider();
+  setInterval(() => {
+    const next = (currentSlide + 1) % slides.length;
+    showSlide(next);
+  }, 4000);
 }
 
 dots.forEach((dot) => {
   dot.addEventListener("click", () => {
-    const index = Number(dot.dataset.slide || 0);
+    const index = Number(dot.dataset.slide);
     showSlide(index);
-    startSlider();
   });
 });
 
+/* Scroll top button - show only near page end */
 function toggleScrollTopVisibility() {
   if (!scrollTopBtn) return;
 
   const scrollTop = window.scrollY || window.pageYOffset;
   const viewportHeight = window.innerHeight;
   const fullHeight = document.documentElement.scrollHeight;
-  const reachedPageEnd = scrollTop + viewportHeight >= fullHeight - 80;
 
-  scrollTopBtn.classList.toggle("show", reachedPageEnd);
+  const nearBottom = scrollTop + viewportHeight >= fullHeight - 120;
+
+  scrollTopBtn.classList.toggle("show", nearBottom);
 }
 
-window.addEventListener("scroll", toggleScrollTopVisibility, { passive: true });
+window.addEventListener("scroll", toggleScrollTopVisibility);
 window.addEventListener("load", toggleScrollTopVisibility);
 window.addEventListener("resize", toggleScrollTopVisibility);
 
@@ -92,22 +75,23 @@ scrollTopBtn?.addEventListener("click", () => {
   window.scrollTo({ top: 0, behavior: "smooth" });
 });
 
+/* Reveal on scroll */
 if (revealEls.length) {
   const revealObserver = new IntersectionObserver(
     (entries) => {
       entries.forEach((entry) => {
         if (entry.isIntersecting) {
           entry.target.classList.add("show");
-          revealObserver.unobserve(entry.target);
         }
       });
     },
-    { threshold: 0.12, rootMargin: "0px 0px -60px 0px" },
+    { threshold: 0.15 },
   );
 
   revealEls.forEach((el) => revealObserver.observe(el));
 }
 
+/* Counter animation */
 if (counters.length) {
   const counterObserver = new IntersectionObserver(
     (entries) => {
@@ -115,43 +99,44 @@ if (counters.length) {
         if (!entry.isIntersecting) return;
 
         const counter = entry.target;
-        const target = Number(counter.dataset.count || 0);
+        const target = Number(counter.dataset.count);
         let current = 0;
-        const increment = Math.max(1, Math.ceil(target / 70));
+        const increment = Math.max(1, Math.ceil(target / 60));
 
         const updateCounter = () => {
           current += increment;
 
           if (current >= target) {
-            counter.textContent = `${target}${target === 100 ? "%" : "+"}`;
-            return;
+            counter.textContent = target + (target === 100 ? "%" : "+");
+          } else {
+            counter.textContent = current;
+            requestAnimationFrame(updateCounter);
           }
-
-          counter.textContent = String(current);
-          requestAnimationFrame(updateCounter);
         };
 
         updateCounter();
         counterObserver.unobserve(counter);
       });
     },
-    { threshold: 0.45 },
+    { threshold: 0.5 },
   );
 
   counters.forEach((counter) => counterObserver.observe(counter));
 }
 
+/* Tilt hover effect - desktop only */
 tiltCards.forEach((card) => {
-  card.addEventListener("mousemove", (event) => {
-    if (window.innerWidth <= 1024) return;
+  card.addEventListener("mousemove", (e) => {
+    if (window.innerWidth <= 768) return;
 
     const rect = card.getBoundingClientRect();
-    const x = event.clientX - rect.left;
-    const y = event.clientY - rect.top;
-    const rotateX = ((y / rect.height) - 0.5) * -7;
-    const rotateY = ((x / rect.width) - 0.5) * 7;
+    const x = e.clientX - rect.left;
+    const y = e.clientY - rect.top;
 
-    card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) translateY(-10px)`;
+    const rotateX = (y / rect.height - 0.5) * -8;
+    const rotateY = (x / rect.width - 0.5) * 8;
+
+    card.style.transform = `perspective(900px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) translateY(-6px)`;
   });
 
   card.addEventListener("mouseleave", () => {
@@ -159,9 +144,10 @@ tiltCards.forEach((card) => {
   });
 });
 
+/* Contact form submit */
 if (contactForm) {
-  contactForm.addEventListener("submit", async (event) => {
-    event.preventDefault();
+  contactForm.addEventListener("submit", async (e) => {
+    e.preventDefault();
 
     const formData = {
       name: document.getElementById("name")?.value.trim(),
@@ -171,15 +157,19 @@ if (contactForm) {
       message: document.getElementById("message")?.value.trim(),
     };
 
-    if (!formData.name || !formData.email || !formData.phone || !formData.service || !formData.message) {
+    if (
+      !formData.name ||
+      !formData.email ||
+      !formData.phone ||
+      !formData.service ||
+      !formData.message
+    ) {
       if (formStatus) {
         formStatus.textContent = "Please fill in all fields.";
-        formStatus.style.color = "#dc2626";
+        formStatus.style.color = "red";
       }
       return;
     }
-
-    const endpoint = contactForm.getAttribute("data-endpoint") || "http://localhost:5000/api/contact";
 
     try {
       if (submitBtn) {
@@ -189,31 +179,34 @@ if (contactForm) {
 
       if (formStatus) {
         formStatus.textContent = "Sending message...";
-        formStatus.style.color = "#64748b";
+        formStatus.style.color = "#555";
       }
 
-      const response = await fetch(endpoint, {
+      const res = await fetch("http://localhost:5000/api/contact", {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
+        headers: {
+          "Content-Type": "application/json",
+        },
         body: JSON.stringify(formData),
       });
 
-      const data = await response.json();
+      const data = await res.json();
 
-      if (response.ok && data.success) {
+      if (data.success) {
         if (formStatus) {
           formStatus.textContent = "Message sent successfully.";
-          formStatus.style.color = "#16a34a";
+          formStatus.style.color = "green";
         }
 
         contactForm.reset();
+
         setTimeout(() => {
           window.location.href = "thank-you.html";
-        }, 900);
+        }, 1000);
       } else {
         if (formStatus) {
           formStatus.textContent = data.message || "Failed to send message.";
-          formStatus.style.color = "#dc2626";
+          formStatus.style.color = "red";
         }
       }
     } catch (error) {
@@ -221,7 +214,7 @@ if (contactForm) {
 
       if (formStatus) {
         formStatus.textContent = "Something went wrong. Please try again.";
-        formStatus.style.color = "#dc2626";
+        formStatus.style.color = "red";
       }
     } finally {
       if (submitBtn) {
@@ -232,100 +225,27 @@ if (contactForm) {
   });
 }
 
-document.querySelectorAll(".faq-question").forEach((button) => {
-  button.addEventListener("click", () => {
-    const item = button.closest(".faq-item");
+/* FAQ accordion */
+document.querySelectorAll(".faq-question").forEach((btn) => {
+  btn.addEventListener("click", () => {
+    const item = btn.parentElement;
 
     document.querySelectorAll(".faq-item").forEach((faq) => {
       if (faq !== item) faq.classList.remove("active");
     });
 
-    item?.classList.toggle("active");
+    item.classList.toggle("active");
   });
 });
 
+/* Mobile horizontal card rails disabled to keep real stacked grids on small screens */
 function initMobileCardRails() {
-  const railSelectors = [
-    ".grid-3",
-    ".hero-stats",
-    ".gallery-grid",
-    ".pricing-highlight-grid",
-    ".pricing-grid",
-    ".pricing-extra-grid",
-    ".pricing-insights",
-  ];
-
-  railSelectors.forEach((selector) => {
-    document.querySelectorAll(selector).forEach((rail) => {
-      const existingDots = rail.nextElementSibling;
-
-      if (window.innerWidth > 640) {
-        rail.classList.remove("mobile-card-rail");
-        rail.dataset.railReady = "false";
-
-        if (existingDots && existingDots.classList.contains("mobile-rail-dots")) {
-          existingDots.remove();
-        }
-
-        return;
-      }
-
-      if (rail.dataset.railReady === "true") return;
-
-      const cards = Array.from(rail.children).filter((child) => child.nodeType === 1);
-      if (cards.length <= 1) return;
-
-      rail.classList.add("mobile-card-rail");
-      rail.dataset.railReady = "true";
-
-      const dotsWrap = document.createElement("div");
-      dotsWrap.className = "mobile-rail-dots";
-
-      const getCardLeft = (card) => {
-        const left = card.offsetLeft - rail.offsetLeft - ((rail.clientWidth - card.clientWidth) / 2);
-        const maxLeft = rail.scrollWidth - rail.clientWidth;
-        return Math.max(0, Math.min(left, maxLeft));
-      };
-
-      cards.forEach((card, index) => {
-        const dot = document.createElement("button");
-        dot.type = "button";
-        dot.className = `mobile-rail-dot ${index === 0 ? "active" : ""}`;
-        dot.setAttribute("aria-label", `Go to card ${index + 1}`);
-
-        dot.addEventListener("click", () => {
-          rail.scrollTo({ left: getCardLeft(card), behavior: "smooth" });
-        });
-
-        dotsWrap.appendChild(dot);
-      });
-
-      rail.insertAdjacentElement("afterend", dotsWrap);
-
-      const updateDots = () => {
-        const railCenter = rail.scrollLeft + (rail.clientWidth / 2);
-        let activeIndex = 0;
-        let smallestDistance = Infinity;
-
-        cards.forEach((card, index) => {
-          const cardCenter = card.offsetLeft - rail.offsetLeft + (card.clientWidth / 2);
-          const distance = Math.abs(cardCenter - railCenter);
-
-          if (distance < smallestDistance) {
-            smallestDistance = distance;
-            activeIndex = index;
-          }
-        });
-
-        dotsWrap.querySelectorAll(".mobile-rail-dot").forEach((dot, index) => {
-          dot.classList.toggle("active", index === activeIndex);
-        });
-      };
-
-      rail.addEventListener("scroll", updateDots, { passive: true });
-      updateDots();
-    });
+  document.querySelectorAll(".mobile-card-rail").forEach((rail) => {
+    rail.classList.remove("mobile-card-rail");
+    rail.dataset.railReady = "false";
   });
+
+  document.querySelectorAll(".mobile-rail-dots").forEach((dots) => dots.remove());
 }
 
 window.addEventListener("load", initMobileCardRails);
