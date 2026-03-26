@@ -8,14 +8,14 @@
       name="description"
       content="Contact MuluTilaCodeCamp for education, websites, software solutions, UI/UX, and business tech support."
     />
-    <link rel="stylesheet" href="style.css" />
+    <link rel="stylesheet" href="../../style.css" />
   </head>
   <body>
     <header class="site-header">
       <div class="container nav-wrap">
         <a href="index.html" class="brand">
           <img
-            src="assets/logo.png"
+            src="../../assets/logo.png"
             alt="MuluTilaCodeCamp Logo"
             class="brand-logo"
           />
@@ -62,44 +62,38 @@
 
             <div class="contact-item-box">
               <strong>Business Focus</strong>
-              <span
-                >Technology Training, Software Services, Web Solutions, UI/UX,
-                Business Tech Support</span
-              >
+              <span>
+                Technology Training, Software Services, Web Solutions, UI/UX,
+                Business Tech Support
+              </span>
             </div>
 
             <div class="contact-item-box">
               <strong>Location</strong>
               <span>Addis Ababa, Ethiopia</span>
             </div>
+            <div class="contact-item-box">
+              <strong>Phone</strong>
+              <span>+251955168453 </span>
+            </div>
 
             <div class="contact-item-box">
               <strong>Response Type</strong>
-              <span
-                >Training inquiries, business service requests, consultation,
-                and digital project discussions</span
-              >
+              <span>
+                <ul>
+                  <li>Training inquiries</li>
+                  <li>Business Service Requests</li>
+                  <li>Consultation</li>
+                  <li>Digital /Project Discussions</li>
+                </ul>
+              </span>
             </div>
           </div>
 
           <div class="contact-form-card reveal glow-card">
             <h2>Send Message</h2>
 
-            <form
-              id="contactForm"
-              class="contact-form"
-              action="https://formsubmit.co/yegnabetsew@gmail.com"
-              method="POST"
-            >
-              <input
-                type="hidden"
-                name="_subject"
-                value="New MuluTilaCodeCamp Inquiry"
-              />
-              <input type="hidden" name="_captcha" value="false" />
-              <input type="hidden" name="_template" value="table" />
-              <input type="hidden" name="_next" value="thank-you.html" />
-
+            <form id="contactForm" class="contact-form">
               <div class="form-group">
                 <label for="name">Full Name</label>
                 <input type="text" id="name" name="name" required />
@@ -142,10 +136,13 @@
                 ></textarea>
               </div>
 
-              <button type="submit" class="btn btn-primary">
+              <button type="submit" class="btn btn-primary" id="submitBtn">
                 Send Message
               </button>
-              <p class="form-status">Need to check your data must be a real!</p>
+
+              <p class="form-status" id="formStatus">
+                Need to check your data must be real.
+              </p>
             </form>
           </div>
         </div>
@@ -167,11 +164,14 @@
           <a href="services.html">Services</a>
           <a href="contact.html">Contact</a>
         </div>
+
         <div>
-          &copy;2026
+          &copy; 2026
           <a href="#">
-            <h3>Power by MuluTilaCodeCamp | Prof.Semahegn TD.</h3></a
-          >
+            <h3 style="text-decoration-color: white">
+              Powered by MuluTilaCodeCamp | Prof. Semahegn TD.
+            </h3>
+          </a>
         </div>
       </div>
     </footer>
@@ -187,9 +187,13 @@
       rel="noopener noreferrer"
       aria-label="Chat on Telegram"
     >
-      ✈
+      <img
+        src="../../assets/telegram.png"
+        alt=""
+        style="width: 7px; height: 7px"
+      />
     </a>
 
-    <script src="script.js"></script>
+    <script src="../../script.js"></script>
   </body>
 </html>
