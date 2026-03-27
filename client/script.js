@@ -9,23 +9,62 @@ const tiltCards = document.querySelectorAll(".tilt-card");
 const contactForm = document.getElementById("contactForm");
 const formStatus = document.getElementById("formStatus");
 const submitBtn = document.getElementById("submitBtn");
+const currentYearEl = document.getElementById("currentYear");
 
-/* Mobile menu */
+if (currentYearEl) {
+  currentYearEl.textContent = new Date().getFullYear();
+}
+
+/* =========================
+   FLOATING HAMBURGER STATE
+========================= */
+function handleHeaderState() {
+  const scrollY = window.scrollY || window.pageYOffset;
+  const passedHero = scrollY > 120;
+
+  document.body.classList.toggle("past-hero", passedHero);
+
+  if (!passedHero) {
+    siteNav?.classList.remove("show");
+    if (menuToggle) menuToggle.innerHTML = "☰";
+  }
+}
+
 if (menuToggle && siteNav) {
-  menuToggle.addEventListener("click", () => {
+  menuToggle.addEventListener("click", (e) => {
+    e.stopPropagation();
+
+    if (!document.body.classList.contains("past-hero")) return;
+
     siteNav.classList.toggle("show");
-    menuToggle.textContent = siteNav.classList.contains("show") ? "✕" : "☰";
+    menuToggle.innerHTML = siteNav.classList.contains("show") ? "✕" : "☰";
   });
 
-  document.querySelectorAll(".nav-link").forEach((link) => {
+  document.querySelectorAll(".nav-link, .nav-cta").forEach((link) => {
     link.addEventListener("click", () => {
       siteNav.classList.remove("show");
-      menuToggle.textContent = "☰";
+      menuToggle.innerHTML = "☰";
     });
+  });
+
+  document.addEventListener("click", (e) => {
+    const clickedToggle = menuToggle.contains(e.target);
+    const clickedNav = siteNav.contains(e.target);
+
+    if (!clickedToggle && !clickedNav) {
+      siteNav.classList.remove("show");
+      menuToggle.innerHTML = "☰";
+    }
   });
 }
 
-/* Hero autoplay slider */
+window.addEventListener("load", handleHeaderState);
+window.addEventListener("scroll", handleHeaderState);
+window.addEventListener("resize", handleHeaderState);
+
+/* =========================
+   HERO SLIDER
+========================= */
 let currentSlide = 0;
 
 function showSlide(index) {
@@ -54,7 +93,9 @@ dots.forEach((dot) => {
   });
 });
 
-/* Scroll top button - show only near page end */
+/* =========================
+   BACK TO TOP BUTTON
+========================= */
 function toggleScrollTopVisibility() {
   if (!scrollTopBtn) return;
 
@@ -63,19 +104,20 @@ function toggleScrollTopVisibility() {
   const fullHeight = document.documentElement.scrollHeight;
 
   const nearBottom = scrollTop + viewportHeight >= fullHeight - 120;
-
   scrollTopBtn.classList.toggle("show", nearBottom);
 }
 
-window.addEventListener("scroll", toggleScrollTopVisibility);
 window.addEventListener("load", toggleScrollTopVisibility);
+window.addEventListener("scroll", toggleScrollTopVisibility);
 window.addEventListener("resize", toggleScrollTopVisibility);
 
 scrollTopBtn?.addEventListener("click", () => {
   window.scrollTo({ top: 0, behavior: "smooth" });
 });
 
-/* Reveal on scroll */
+/* =========================
+   REVEAL ANIMATION
+========================= */
 if (revealEls.length) {
   const revealObserver = new IntersectionObserver(
     (entries) => {
@@ -91,7 +133,9 @@ if (revealEls.length) {
   revealEls.forEach((el) => revealObserver.observe(el));
 }
 
-/* Counter animation */
+/* =========================
+   COUNTER
+========================= */
 if (counters.length) {
   const counterObserver = new IntersectionObserver(
     (entries) => {
@@ -124,7 +168,9 @@ if (counters.length) {
   counters.forEach((counter) => counterObserver.observe(counter));
 }
 
-/* Tilt hover effect - desktop only */
+/* =========================
+   TILT HOVER EFFECT
+========================= */
 tiltCards.forEach((card) => {
   card.addEventListener("mousemove", (e) => {
     if (window.innerWidth <= 768) return;
@@ -144,7 +190,9 @@ tiltCards.forEach((card) => {
   });
 });
 
-/* Contact form submit */
+/* =========================
+   CONTACT FORM
+========================= */
 if (contactForm) {
   contactForm.addEventListener("submit", async (e) => {
     e.preventDefault();
@@ -225,7 +273,9 @@ if (contactForm) {
   });
 }
 
-/* FAQ accordion */
+/* =========================
+   FAQ
+========================= */
 document.querySelectorAll(".faq-question").forEach((btn) => {
   btn.addEventListener("click", () => {
     const item = btn.parentElement;
@@ -238,14 +288,18 @@ document.querySelectorAll(".faq-question").forEach((btn) => {
   });
 });
 
-/* Mobile horizontal card rails disabled to keep real stacked grids on small screens */
+/* =========================
+   DISABLE MOBILE HORIZONTAL RAILS
+========================= */
 function initMobileCardRails() {
   document.querySelectorAll(".mobile-card-rail").forEach((rail) => {
     rail.classList.remove("mobile-card-rail");
     rail.dataset.railReady = "false";
   });
 
-  document.querySelectorAll(".mobile-rail-dots").forEach((dots) => dots.remove());
+  document
+    .querySelectorAll(".mobile-rail-dots")
+    .forEach((dots) => dots.remove());
 }
 
 window.addEventListener("load", initMobileCardRails);
