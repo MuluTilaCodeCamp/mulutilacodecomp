@@ -1531,3 +1531,10 @@ body.past-hero .menu-toggle {
   background: #edf5ff !important;
   color: #0a1f44 !important;
 }
+
+.service-card-info{
+  background: var(--white);
+  font-size: medium;
+  color: rgba(0, 0, 0, 0.7) !important;
+  font-weight: 800;
+}
